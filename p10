@@ -1,0 +1,28 @@
+rm(list=ls()) 
+library(e1071) 
+library(ggplot2) 
+mtcars 
+carData <- mtcars 
+number.of.observations<-dim(carData)[1] 
+number.of.variables<-dim(carData)[2] 
+car.with.largest.hp<-row.names(subset(carData, carData$hp==max(carData$hp))) 
+car.with.largest.hp                                       
+car.with.least.hp<-row.names(subset(carData, carData$hp==min(carData$hp))) 
+car.with.least.hp  
+hist(carData$mpg,col="green", border="black",prob = TRUE) 
+lines(density(carData$mpg),col = "chocolate3") 
+skewness(carData$mpg,type=2) 
+kurtosis(carData$mpg,type=2) 
+ 
+carData.4cyl.hp<-subset(carData,carData$cyl==4)["hp"] 
+carData.8cyl.hp<-subset(carData,carData$cyl==8)["hp"] 
+diff.gross.hp<-round(mean(carData.8cyl.hp[,1])-mean(carData.4cyl.hp[,1]))                                        
+print(diff.gross.hp) 
+diff.sd<-round(sd(carData.8cyl.hp[,1])-sd(carData.4cyl.hp[,1]))  
+print(diff.sd) 
+print(cor(carData$mpg, carData$cyl, method = 'pearson')) 
+print(cor(carData$mpg, carData$disp, method = 'pearson'))  
+print(cor(carData$mpg, carData$hp, method = 'pearson')) 
+print(cor(carData$mpg, carData$drat, method = 'pearson')) 
+print(cor(carData$mpg, carData$wt, method = 'pearson')) 
+print(cor(carData$mpg, carData$qsec, method = 'pearson'))
