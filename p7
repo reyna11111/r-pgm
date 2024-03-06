@@ -1,0 +1,39 @@
+rm(list=ls()) 
+item1<- c('1001','Electronics','700') 
+item2<- c('1002','Desktop Supplies','300') 
+item3<- c('1003','Office Supplies','350') 
+item4<- c('1004','USB','400') 
+item5<- c('1005','CD Drive','800') 
+itemList = list(item1,item2,item3,item4,item5) 
+columns<-c('itemCode','itemCategory','itemPrice') 
+itemData = data.frame(matrix(nrow = 0, ncol = length(columns)))  
+colnames(itemData) = columns 
+View(itemData) 
+for(item in itemList){ 
+itemData[nrow(itemData)+1,]<-item 
+} 
+View(itemData) 
+#Create Required subsets 
+sub_itemData_gt350<-subset(itemData, itemData$itemPrice >= 350)  
+View(sub_itemData_gt350) 
+sub_itemData_supplies<-subset(itemData, (itemData$itemCategory=='Office Supplies') 
+|(itemData$itemCategory=='Desktop Supplies'))  
+View(sub_itemData_supplies) 
+#CReate Seond Dataframe 
+itemDetailsColumn<-c('itemCode','ItemQtyonHand','ItemReorderLvl') 
+itemDetails = data.frame(matrix(nrow = 0, ncol = length(itemDetailsColumn)))  
+colnames(itemDetails) = itemDetailsColumn 
+View(itemDetails) 
+itemDetails1<- c('1001','15','2') 
+itemDetails2<- c('1002','10','2') 
+itemDetails3<- c('1003','20','4') 
+itemDetails4<- c('1004','12','5') 
+itemDetails5<- c('1005','5','1') 
+itemDetailsList = list(itemDetails1,itemDetails2,itemDetails3,itemDetails4,itemDetails5) 
+for(itemDetail in itemDetailsList){ 
+itemDetails[nrow(itemDetails)+1,]<-itemDetail 
+} 
+View(itemDetails) 
+#Performing an Inner Join merge 
+merged <- merge(itemData, itemDetails, by = "itemCode") 
+merged
